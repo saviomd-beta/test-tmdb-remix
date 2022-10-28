@@ -7,6 +7,11 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import styles from "./tailwind.css";
+
+export function links() {
+  return [{ rel: "stylesheet", href: styles }];
+}
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -22,7 +27,9 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <div className="container max-w-xl mx-auto">
+          <Outlet />
+        </div>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
