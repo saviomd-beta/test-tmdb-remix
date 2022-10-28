@@ -1,4 +1,5 @@
 import { json } from "@remix-run/node";
+import type { MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 
 import { fetchTmdb, tmdbApi } from "~/utils";
@@ -8,6 +9,13 @@ interface ILoader {
     id: number;
   };
 }
+
+export const meta: MetaFunction = ({ data }) => {
+  return {
+    title: data.title,
+    description: data.overview,
+  };
+};
 
 export async function loader({ params }: ILoader) {
   const { id } = params;
