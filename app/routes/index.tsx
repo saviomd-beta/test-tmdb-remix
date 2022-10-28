@@ -1,31 +1,37 @@
-export default function Index() {
+import { json } from "@remix-run/node";
+import type { LoaderFunction } from "@remix-run/node";
+import { Link, useLoaderData } from "@remix-run/react";
+
+import MovieSearchForm from "~/components/MovieSearchForm";
+import type { IMovieDetails } from "~/types";
+import { fetchTmdb, tmdbApi } from "~/utils";
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const url = new URL(request.url);
+  const name = url.searchParams.get("name");
+  if (name) {
+    const { searchMovie } = tmdbApi.methods;
+    const { path, queryString } = searchMovie({ name });
+    const { results } = await fetchTmdb({ path, queryString });
+    return json(results);
+  }
+  return [];
+};
+
+export default function MovieSearch() {
+  const movies = useLoaderData();
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <h1>Welcome to Remix</h1>
+    <div>
+      <MovieSearchForm />
       <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
+        {movies.map(({ id, overview, title }: IMovieDetails) => (
+          <li key={id}>
+            <h2>
+              <Link to={`/movie/${id}`}>{title}</Link>
+            </h2>
+            <div>{overview}</div>
+          </li>
+        ))}
       </ul>
     </div>
   );
