@@ -25,8 +25,8 @@ export default function MovieSearch() {
       <MovieSearchForm />
       <ul>
         {movies.map(({ id, overview, title }: IMovieDetails) => (
-          <li key={id}>
-            <h2>
+          <li className="border mb-4 p-4 rounded" key={id}>
+            <h2 className="font-bold text-xl">
               <Link to={`/movie/${id}`}>{title}</Link>
             </h2>
             <div>{overview}</div>

@@ -27,12 +27,22 @@ export default function Movie() {
   const movie = useLoaderData();
   return (
     <div>
-      <h1>{movie.title}</h1>
-      <p>release_date: {movie.release_date}</p>
-      <p>runtime: {movie.runtime}</p>
-      <p>overview: {movie.overview}</p>
-      <p>budget: {movie.budget}</p>
-      <p>revenue: {movie.revenue}</p>
+      <h1 className="font-bold text-2xl">{movie.title}</h1>
+      <p className="mb-4">
+        <span className="font-bold">release_date:</span> {movie.release_date}
+      </p>
+      <p className="mb-4">
+        <span className="font-bold">runtime:</span> {movie.runtime}
+      </p>
+      <p className="mb-4">
+        <span className="font-bold">overview:</span> {movie.overview}
+      </p>
+      <p className="mb-4">
+        <span className="font-bold">budget:</span> {movie.budget}
+      </p>
+      <p className="mb-4">
+        <span className="font-bold">revenue:</span> {movie.revenue}
+      </p>
     </div>
   );
 }
